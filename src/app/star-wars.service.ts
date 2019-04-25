@@ -1,19 +1,23 @@
+import { Subject } from 'rxjs';
+
 export class StarWarsService {
 
-  charactersList = [
+  charactersList: any = [
     {name: 'Luke Skywalker', side: 'light'},
     {name: 'Darth Vader', side: 'dark'}
   ];
 
+  listUpdated = new Subject();
+
   constructor() { }
 
-  getCharacters(chosenList) {
-    if (chosenList === 'all') {
+  getCharacters(side) {
+    if (side === 'all') {
       return this.charactersList.slice();
     }
 
     return this.charactersList.filter((eachCharacter) => {
-      return eachCharacter.side === chosenList;
+      return eachCharacter.side === side;
     });
   }
 
@@ -23,6 +27,7 @@ export class StarWarsService {
       return char.name === charInfo.name;
     });
     this.charactersList[index].side = charInfo.side;
+    this.listUpdated.next(true);
   }
 
   addCharacter(name, side) {
@@ -36,6 +41,7 @@ export class StarWarsService {
 
     const newCharacter = {name, side};
     this.charactersList.push(newCharacter);
+    this.listUpdated.next(true);
   }
 
 

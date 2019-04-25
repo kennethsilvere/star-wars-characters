@@ -9,7 +9,6 @@ import { StarWarsService } from '../star-wars.service';
 export class ItemComponent implements OnInit {
 
   @Input() character;
-  // @Output() sideChanged = new EventEmitter<{name: string, side: string}>();
 
   constructor(private swService: StarWarsService) { }
 
@@ -17,7 +16,6 @@ export class ItemComponent implements OnInit {
   }
 
   onSelectSide(side) {
-    // this.sideChanged.emit({name: this.character.name, side});
     this.swService.updateCharacterList({name: this.character.name, side});
   }
 
