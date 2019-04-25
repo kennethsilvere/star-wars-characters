@@ -18,12 +18,24 @@ export class StarWarsService {
   }
 
 
-
   updateCharacterList(charInfo) {
     const index = this.charactersList.findIndex((char) => {
       return char.name === charInfo.name;
     });
     this.charactersList[index].side = charInfo.side;
+  }
+
+  addCharacter(name, side) {
+    const index = this.charactersList.findIndex((char) => {
+      return char.name === name;
+    });
+
+    if (index !== -1) {
+      return;
+    }
+
+    const newCharacter = {name, side};
+    this.charactersList.push(newCharacter);
   }
 
 

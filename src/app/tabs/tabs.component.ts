@@ -12,7 +12,7 @@ export class TabsComponent implements OnInit {
 
   chosenList = 'all';
 
-  constructor(private starWarsService: StarWarsService) { }
+  constructor(private swService: StarWarsService) { }
 
   ngOnInit() {
   }
@@ -22,7 +22,7 @@ export class TabsComponent implements OnInit {
   }
 
   getCharacters() {
-    return this.starWarsService.getCharacters(this.chosenList);
+    return this.swService.getCharacters(this.chosenList);
   }
 
 }
