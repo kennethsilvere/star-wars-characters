@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { StarWarsService } from '../star-wars.service';
 
@@ -16,15 +17,18 @@ export class CreateCharacterComponent implements OnInit {
     {display: 'Dark', value: 'dark'}
   ];
 
-  constructor(private swService: StarWarsService) { }
+  constructor(private swService: StarWarsService, private router: Router) { }
 
   ngOnInit() {
   }
 
   onSubmit(submittedForm: NgForm) {
-    console.log(submittedForm);
     if (submittedForm.valid) {
-      this.swService.addCharacter(submittedForm.value.name, submittedForm.value.side);
+      const returnedVal = this.swService.addCharacter(submittedForm.value.name, submittedForm.value.side);
+      if (returnedVal !== 0) {
+        submittedForm.resetForm();
+        this.router.navigate(['/']);
+      }
     }
   }
 

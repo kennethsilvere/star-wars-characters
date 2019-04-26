@@ -36,7 +36,7 @@ export class StarWarsService {
     });
 
     if (index !== -1) {
-      return;
+      return 0;
     }
 
     const newCharacter = {name, side};
