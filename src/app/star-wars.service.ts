@@ -1,5 +1,9 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
+@Injectable()
 export class StarWarsService {
 
   charactersList: any = [
@@ -9,7 +13,7 @@ export class StarWarsService {
 
   listUpdated = new Subject();
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getCharacters(side) {
     if (side === 'all') {
@@ -44,5 +48,24 @@ export class StarWarsService {
     this.listUpdated.next(true);
   }
 
+  fetchCharacters() {
+    return this.http.get('https://swapi.co/api/people/')
+    .pipe(map((response: any) => {
+      const charArray = response.results;
+      const characters = charArray.map((char) => {
+        return {name: char.name, side: ''};
+      });
+      return characters;
+    }))
+    .subscribe(
+      (data) => {
+        this.charactersList = data;
+        this.listUpdated.next(true);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 
 }
